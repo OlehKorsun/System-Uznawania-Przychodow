@@ -13,9 +13,7 @@ public partial class User
 
     public string Salt { get; set; } = null!;
 
-    public string RefreshToken { get; set; } = null!;
-
-    public DateTime? RefreshTokenExp { get; set; }
+    public string Email { get; set; } = null!;
 
     public int IdRola { get; set; }
 

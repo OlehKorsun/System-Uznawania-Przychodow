@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Identity.Data;
 using System_Uznawania_Przychodow.Requests;
 using LoginRequest = System_Uznawania_Przychodow.Requests.LoginRequest;
 
 namespace System_Uznawania_Przychodow.Services;
 
-public interface IKlientService
+public interface IAuthService
 {
-    Task DeleteClient(int idClient);
+    Task<String> LoginAsync(LoginRequest dto);
+    Task RegisterAsync(RegisterUserRequest dto);
 }

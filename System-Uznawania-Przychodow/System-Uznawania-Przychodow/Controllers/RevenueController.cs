@@ -1,20 +1,20 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System_Uznawania_Przychodow.Data;
 using System_Uznawania_Przychodow.Services;
 
 namespace System_Uznawania_Przychodow.Controllers;
 
+[Authorize(Roles = "user")]
 [ApiController]
 [Route("api/[controller]")]
 public class RevenueController : ControllerBase
 {
     private readonly IRevenueService _revenueService;
-    private readonly ApbdContext _context;
 
-    public RevenueController(IRevenueService revenueService, ApbdContext context)
+    public RevenueController(IRevenueService revenueService)
     {
         _revenueService = revenueService;
-        _context = context;
     }
 
     public async Task<IActionResult> CalculateRevenue()

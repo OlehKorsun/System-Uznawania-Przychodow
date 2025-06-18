@@ -5,13 +5,13 @@ using System_Uznawania_Przychodow.Models;
 
 namespace System_Uznawania_Przychodow.Data;
 
-public partial class ApbdContext : DbContext
+public partial class AppDbContext : DbContext
 {
-    public ApbdContext()
+    public AppDbContext()
     {
     }
 
-    public ApbdContext(DbContextOptions<ApbdContext> options)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }
@@ -43,7 +43,8 @@ public partial class ApbdContext : DbContext
     public virtual DbSet<Znizka> Znizkas { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=APBD;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -235,10 +236,9 @@ public partial class ApbdContext : DbContext
             entity.ToTable("User");
 
             entity.Property(e => e.IdUser).ValueGeneratedNever();
+            entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.Login).HasMaxLength(50);
             entity.Property(e => e.Password).HasMaxLength(100);
-            entity.Property(e => e.RefreshToken).HasMaxLength(100);
-            entity.Property(e => e.RefreshTokenExp).HasColumnType("datetime");
             entity.Property(e => e.Salt).HasMaxLength(50);
 
             entity.HasOne(d => d.IdRolaNavigation).WithMany(p => p.Users)

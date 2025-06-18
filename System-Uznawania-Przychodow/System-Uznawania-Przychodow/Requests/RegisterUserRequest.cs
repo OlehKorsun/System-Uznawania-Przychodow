@@ -12,7 +12,11 @@ public class RegisterUserRequest
     [MaxLength(100)]
     public string Password { get; set; }
     
+    
+    [MaxLength(50)]
+    public string? Rola { get; set; }
+    
     [Required]
     [MaxLength(50)]
-    public string Rola { get; set; }
+    public string Email { get; set; }
 }
