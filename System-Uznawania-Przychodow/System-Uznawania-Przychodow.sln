@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System-Uznawania-Przychodow", "System-Uznawania-Przychodow\System-Uznawania-Przychodow.csproj", "{2CA78B3C-83CE-4832-BC56-5F9A2AD72515}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System-Uznawania-Przychodow.Tests", "System-Uznawania-Przychodow.Tests\System-Uznawania-Przychodow.Tests.csproj", "{8D2B87B2-C716-4B18-A0AB-2E74903483A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{2CA78B3C-83CE-4832-BC56-5F9A2AD72515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CA78B3C-83CE-4832-BC56-5F9A2AD72515}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CA78B3C-83CE-4832-BC56-5F9A2AD72515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D2B87B2-C716-4B18-A0AB-2E74903483A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2B87B2-C716-4B18-A0AB-2E74903483A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D2B87B2-C716-4B18-A0AB-2E74903483A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2B87B2-C716-4B18-A0AB-2E74903483A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
