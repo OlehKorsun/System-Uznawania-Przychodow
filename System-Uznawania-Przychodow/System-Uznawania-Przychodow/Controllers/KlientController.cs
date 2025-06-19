@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System_Uznawania_Przychodow.Data;
+using System_Uznawania_Przychodow.Exceptions;
 using System_Uznawania_Przychodow.Requests;
 using System_Uznawania_Przychodow.Services;
 
@@ -21,29 +22,82 @@ public class KlientController : ControllerBase
     }
     
     
-    public async Task<IActionResult> AddClientOsobaFizyczna()
+    [HttpPost("individual")]
+    public async Task<IActionResult> AddClientOsobaFizyczna([FromBody]CreateIndividualRequest request)
     {
-        return Ok();
+        try
+        {
+            await _klientService.CreateIndividualAsync(request);
+            return Created();
+        }
+        catch (ClientHasExistsException e)
+        {
+            return BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
-    public async Task<IActionResult> AddClientFirma()
+    [HttpPost("firma")]
+    public async Task<IActionResult> AddClientFirma(CreateFirmaRequest request)
     {
-        return Ok();
+        try
+        {
+            await _klientService.CreateFirmaAsync(request);
+            return Created();
+
+        }
+        catch (ClientHasExistsException e)
+        {
+            return BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
-    public async Task<IActionResult> DeleteClient()
+    [HttpDelete("klient/{idClient}")]
+    public async Task<IActionResult> DeleteClient(int idClient)
     {
-        return Ok();
+        try
+        {
+            await _klientService.DeleteClient(idClient);
+            return Ok();
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
-    public async Task<IActionResult> UpdateClientOsobaFizyczna()
+    [HttpPut("client/{idClient}")]
+    public async Task<IActionResult> UpdateClient([FromBody]UpdateClientRequest request, int idClient)
     {
-        return Ok();
+        try
+        {
+            await _klientService.UpdateClientAsync(request, idClient);
+            return Ok();
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (UpdateClientException e)
+        {
+            return BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
-
-    public async Task<IActionResult> UpdateClientFirma()
-    {
-        return Ok();
-    }
+    
     
 }

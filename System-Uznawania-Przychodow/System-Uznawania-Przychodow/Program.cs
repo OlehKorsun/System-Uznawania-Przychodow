@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System_Uznawania_Przychodow.Data;
 using System_Uznawania_Przychodow.Middlewares;
+using System_Uznawania_Przychodow.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 });
 
 
-
+builder.Services.AddScoped<IKlientService, KlientService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRevenueService, RevenueService>();
+builder.Services.AddScoped<IUmowaService, UmowaService>();
 
 builder.Services.AddAuthentication(options =>
     {

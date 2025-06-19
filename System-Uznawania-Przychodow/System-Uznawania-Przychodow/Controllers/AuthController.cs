@@ -32,6 +32,7 @@ public class AuthController : ControllerBase
         }
     }
 
+    [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest dto)
     {
         try

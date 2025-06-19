@@ -6,5 +6,8 @@ namespace System_Uznawania_Przychodow.Services;
 
 public interface IKlientService
 {
+    Task CreateIndividualAsync(CreateIndividualRequest request);
+    Task CreateFirmaAsync(CreateFirmaRequest request);
+    Task UpdateClientAsync(UpdateClientRequest request, int idClient);
     Task DeleteClient(int idClient);
 }

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System_Uznawania_Przychodow.Data;
+using System_Uznawania_Przychodow.Exceptions;
+using System_Uznawania_Przychodow.Requests;
 using System_Uznawania_Przychodow.Services;
 
 namespace System_Uznawania_Przychodow.Controllers;
@@ -18,14 +20,35 @@ public class UmowaController : ControllerBase
         _umowaService = umowaService;
     }
 
-
-    public async Task<IActionResult> CreateUmowa()
+    [HttpPost]
+    public async Task<IActionResult> CreateUmowa(CreateUmowaRequest request)
     {
-        return Ok();
+        try
+        {
+            await _umowaService.CreateUmowaAsync(request);
+            return Ok();
+        }
+        catch (DateException e)
+        {
+            return BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
-    public async Task<IActionResult> BillingContract()
+    [HttpGet("{idUmowa}")]
+    public async Task<IActionResult> BillingContract(int idUmowa)
     {
-        return Ok();
+        try
+        {
+            var result = await _umowaService.BillingContract(idUmowa);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 }
