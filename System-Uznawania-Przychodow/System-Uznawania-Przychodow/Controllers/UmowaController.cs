@@ -32,6 +32,10 @@ public class UmowaController : ControllerBase
         {
             return BadRequest(e.Message);
         }
+        catch (ClientHasContractException e)
+        {
+            return Conflict(e.Message);
+        }
         catch (Exception e)
         {
             return StatusCode(500, e.Message);

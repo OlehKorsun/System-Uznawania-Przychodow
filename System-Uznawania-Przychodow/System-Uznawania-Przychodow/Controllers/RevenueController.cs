@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System_Uznawania_Przychodow.Data;
+using System_Uznawania_Przychodow.Requests;
 using System_Uznawania_Przychodow.Services;
 
 namespace System_Uznawania_Przychodow.Controllers;
@@ -17,14 +18,31 @@ public class RevenueController : ControllerBase
         _revenueService = revenueService;
     }
 
-    public async Task<IActionResult> CalculateRevenue()
+    [HttpGet]
+    public async Task<IActionResult> CalculateRevenue([FromBody] PrzychodRequest przychodRequest)
     {
-        return Ok();
+        try
+        {
+            var przychod = await _revenueService.GetPrzychod(przychodRequest);
+            return Ok(przychod);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
-
-    public async Task<IActionResult> CalculateAnticipatedRevenue()
+    [HttpGet("anticipated")]
+    public async Task<IActionResult> CalculateAnticipatedRevenue([FromBody] PrzychodRequest przychodRequest)
     {
-        return Ok();
+        try
+        {
+            var przychod = await _revenueService.GetPrzychodPrzewidywalny(przychodRequest);
+            return Ok(przychod);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 }

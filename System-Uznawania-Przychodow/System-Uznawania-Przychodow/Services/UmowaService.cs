@@ -23,6 +23,13 @@ public class UmowaService : IUmowaService
         {
             throw new DateException("Czas trwania umowy musi wynosić co najmniej 3 dni i maksymalnie 30 dni!");
         }
+
+        var client = await _context.Umowas.FirstOrDefaultAsync(u => u.Odbiorca == request.IdOdbiorca && u.IdOprogramowanie == request.IdOprogramowanie);
+
+        if (client != null)
+        {
+            throw new ClientHasContractException($"Client o id: {request.IdOdbiorca} już posiada umowę na oprogramowanie z id: {request.IdOprogramowanie}!");
+        }
         
         var newId = await _context.Umowas.MaxAsync(a => a.IdUmowa)+1;
         

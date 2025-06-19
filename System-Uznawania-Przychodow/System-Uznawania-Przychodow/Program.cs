@@ -28,6 +28,14 @@ builder.Services.AddScoped<IKlientService, KlientService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRevenueService, RevenueService>();
 builder.Services.AddScoped<IUmowaService, UmowaService>();
+builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+
+builder.Services.AddHttpClient<ICurrencyService, CurrencyService>();
+
+
+
+
+
 
 builder.Services.AddAuthentication(options =>
     {
