@@ -11,7 +11,7 @@ public class CreateUmowaRequest
     public DateOnly DataDo { get; set; }
     
     [Required]
-    public double Cena { get; set; }
+    public decimal Cena { get; set; }
     
     [Required]
     public int IdSprzedawca { get; set; }

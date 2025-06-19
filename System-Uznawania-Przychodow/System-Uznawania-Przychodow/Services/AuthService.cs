@@ -86,7 +86,7 @@ public class AuthService : IAuthService
         }
 
         var hashSold = CreateSold();
-        var hashPassword = ComputeHash(dto.Password);
+        var hashPassword = ComputeHash(dto.Password + hashSold);
 
         var rola = await _context.Rolas.FirstOrDefaultAsync(r => r.Nazwa == dto.Rola);
         int rolaId;
@@ -99,7 +99,7 @@ public class AuthService : IAuthService
             rolaId = rola.IdRola;
         }
 
-        var maxId = await _context.Users.MaxAsync(a => a.IdUser);
+        var maxId = await _context.Users.Select(a => (int?)a.IdUser).MaxAsync() ?? 0;
         
         user = new User()
         {

@@ -32,6 +32,30 @@ public class UmowaService : IUmowaService
         }
         
         var newId = await _context.Umowas.MaxAsync(a => a.IdUmowa)+1;
+
+        Znizka znizkaClient = await _context.Znizkas.FindAsync(request.IdZnizka);
+        Znizka znizkaStaly = null;
+        
+        int? znizkaId = null;
+
+        if (await _context.Umowas.FirstOrDefaultAsync(u => u.Odbiorca == request.IdOdbiorca) != null)
+            znizkaStaly = await _context.Znizkas.FirstOrDefaultAsync(z => z.Nazwa == "Dla stalych klientow");
+
+        if (znizkaStaly != null && znizkaClient != null)
+        {
+            if(znizkaStaly.Wartosc > znizkaClient.Wartosc)
+                znizkaId = znizkaStaly.IdZnizka;
+            else 
+                znizkaId = znizkaClient.IdZnizka;
+        }
+        else if(znizkaStaly != null)
+        {
+            znizkaId = znizkaStaly.IdZnizka;
+        }
+        else if (znizkaClient != null)
+        {
+            znizkaId = znizkaClient.IdZnizka;
+        }
         
         Umowa umowa = new Umowa()
         {
@@ -41,9 +65,10 @@ public class UmowaService : IUmowaService
             Odbiorca = request.IdOdbiorca,
             DataOd = request.DataOd,
             DataDo = request.DataDo,
+            Cena = request.Cena,
             CzyOplacona = 0,
             CzyPodpisana = 0,
-            IdZnizka = request.IdZnizka,
+            IdZnizka = znizkaId,
         };
         
         await _context.Umowas.AddAsync(umowa);
@@ -78,6 +103,7 @@ public class UmowaService : IUmowaService
 
         var result = new BillingContractDTO()
         {
+            IdUmowa = umowa.IdUmowa,
             Odbiorca = imieLubNazwa,
             Oprogramowanie = (await _context.Oprogramowanies.FindAsync(umowa.IdOprogramowanie))?.Nazwa,
             DzienMiesiaca = umowa.IdRata != null

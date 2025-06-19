@@ -20,8 +20,16 @@ public class KlientController : ControllerBase
         _klientService = klientService;
         _configuration = configuration;
     }
-    
-    
+
+
+    // [HttpGet]
+    // public async Task<IActionResult> Get()
+    // {
+    //     return Ok("HURRA!!!");
+    // }
+
+
+
     [HttpPost("individual")]
     public async Task<IActionResult> AddClientOsobaFizyczna([FromBody]CreateIndividualRequest request)
     {
@@ -59,7 +67,7 @@ public class KlientController : ControllerBase
         }
     }
 
-    [HttpDelete("klient/{idClient}")]
+    [HttpDelete("{idClient}")]
     public async Task<IActionResult> DeleteClient(int idClient)
     {
         try
@@ -77,7 +85,7 @@ public class KlientController : ControllerBase
         }
     }
 
-    [HttpPut("client/{idClient}")]
+    [HttpPut("{idClient}")]
     public async Task<IActionResult> UpdateClient([FromBody]UpdateClientRequest request, int idClient)
     {
         try

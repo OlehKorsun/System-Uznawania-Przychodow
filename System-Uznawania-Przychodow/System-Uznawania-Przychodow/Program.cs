@@ -26,15 +26,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 
 builder.Services.AddScoped<IKlientService, KlientService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IRevenueService, RevenueService>();
-builder.Services.AddScoped<IUmowaService, UmowaService>();
-builder.Services.AddScoped<ICurrencyService, CurrencyService>();
-
 builder.Services.AddHttpClient<ICurrencyService, CurrencyService>();
-
-
-
-
+builder.Services.AddScoped<IRevenueService, RevenueService>();
+// builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+builder.Services.AddScoped<IUmowaService, UmowaService>();
 
 
 builder.Services.AddAuthentication(options =>
@@ -82,8 +77,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

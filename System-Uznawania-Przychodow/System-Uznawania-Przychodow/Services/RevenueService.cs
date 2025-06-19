@@ -12,7 +12,7 @@ public class RevenueService : IRevenueService
     private readonly AppDbContext _context;
     private readonly ICurrencyService _currencyService;
 
-    public RevenueService(AppDbContext context, CurrencyService currencyService)
+    public RevenueService(AppDbContext context, ICurrencyService currencyService)
     {
         _context = context;
         _currencyService = currencyService;

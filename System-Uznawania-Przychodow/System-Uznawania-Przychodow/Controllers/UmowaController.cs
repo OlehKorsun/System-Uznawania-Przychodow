@@ -26,7 +26,7 @@ public class UmowaController : ControllerBase
         try
         {
             await _umowaService.CreateUmowaAsync(request);
-            return Ok();
+            return Created();
         }
         catch (DateException e)
         {
@@ -48,7 +48,7 @@ public class UmowaController : ControllerBase
         try
         {
             var result = await _umowaService.BillingContract(idUmowa);
-            return Ok();
+            return Ok(result);
         }
         catch (Exception e)
         {
