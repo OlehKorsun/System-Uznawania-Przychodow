@@ -21,31 +21,14 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest dto)
     {
-        try
-        {
-            var res = await _authService.LoginAsync(dto);
-            return Ok(res);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        var res = await _authService.LoginAsync(dto);
+        return Ok(res);
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest dto)
     {
-        try
-        {
-            await _authService.RegisterAsync(dto);
-            return Ok("Rejestracja przebiegła prawidłowo!");
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        await _authService.RegisterAsync(dto);
+        return Ok("Rejestracja przebiegła prawidłowo!");
     }
-    
-    
-    
 }

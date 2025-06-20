@@ -21,28 +21,14 @@ public class RevenueController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> CalculateRevenue([FromBody] PrzychodRequest przychodRequest)
     {
-        try
-        {
-            var przychod = await _revenueService.GetPrzychod(przychodRequest);
-            return Ok(przychod);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        var przychod = await _revenueService.GetPrzychod(przychodRequest);
+        return Ok(przychod);
     }
 
     [HttpGet("anticipated")]
     public async Task<IActionResult> CalculateAnticipatedRevenue([FromBody] PrzychodRequest przychodRequest)
     {
-        try
-        {
-            var przychod = await _revenueService.GetPrzychodPrzewidywalny(przychodRequest);
-            return Ok(przychod);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        var przychod = await _revenueService.GetPrzychodPrzewidywalny(przychodRequest);
+        return Ok(przychod);
     }
 }

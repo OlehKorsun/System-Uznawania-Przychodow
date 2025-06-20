@@ -21,90 +21,32 @@ public class KlientController : ControllerBase
         _configuration = configuration;
     }
 
-
-    // [HttpGet]
-    // public async Task<IActionResult> Get()
-    // {
-    //     return Ok("HURRA!!!");
-    // }
-
-
-
     [HttpPost("individual")]
     public async Task<IActionResult> AddClientOsobaFizyczna([FromBody]CreateIndividualRequest request)
     {
-        try
-        {
-            await _klientService.CreateIndividualAsync(request);
-            return Created();
-        }
-        catch (ClientHasExistsException e)
-        {
-            return BadRequest(e.Message);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        await _klientService.CreateIndividualAsync(request);
+        return Created();
     }
 
     [HttpPost("firma")]
     public async Task<IActionResult> AddClientFirma(CreateFirmaRequest request)
     {
-        try
-        {
-            await _klientService.CreateFirmaAsync(request);
-            return Created();
-
-        }
-        catch (ClientHasExistsException e)
-        {
-            return BadRequest(e.Message);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        await _klientService.CreateFirmaAsync(request);
+        return Created();
     }
 
     [HttpDelete("{idClient}")]
     public async Task<IActionResult> DeleteClient(int idClient)
     {
-        try
-        {
-            await _klientService.DeleteClient(idClient);
-            return Ok();
-        }
-        catch (KeyNotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        await _klientService.DeleteClient(idClient);
+        return Ok();
     }
 
     [HttpPut("{idClient}")]
     public async Task<IActionResult> UpdateClient([FromBody]UpdateClientRequest request, int idClient)
     {
-        try
-        {
-            await _klientService.UpdateClientAsync(request, idClient);
-            return Ok();
-        }
-        catch (KeyNotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
-        catch (UpdateClientException e)
-        {
-            return BadRequest(e.Message);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        await _klientService.UpdateClientAsync(request, idClient);
+        return Ok();
     }
     
     

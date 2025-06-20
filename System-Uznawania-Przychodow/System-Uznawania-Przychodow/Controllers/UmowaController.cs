@@ -23,36 +23,14 @@ public class UmowaController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUmowa(CreateUmowaRequest request)
     {
-        try
-        {
-            await _umowaService.CreateUmowaAsync(request);
-            return Created();
-        }
-        catch (DateException e)
-        {
-            return BadRequest(e.Message);
-        }
-        catch (ClientHasContractException e)
-        {
-            return Conflict(e.Message);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        await _umowaService.CreateUmowaAsync(request);
+        return Created();
     }
 
     [HttpGet("{idUmowa}")]
     public async Task<IActionResult> BillingContract(int idUmowa)
     {
-        try
-        {
-            var result = await _umowaService.BillingContract(idUmowa);
-            return Ok(result);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        var result = await _umowaService.BillingContract(idUmowa); 
+        return Ok(result);
     }
 }

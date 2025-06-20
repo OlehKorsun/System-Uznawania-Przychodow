@@ -1,4 +1,5 @@
 using System.Net;
+using System_Uznawania_Przychodow.Exceptions;
 
 namespace System_Uznawania_Przychodow.Middlewares;
 
@@ -32,24 +33,58 @@ public class ErrorHandlingMiddleware
 
     private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        // Set the status code and response content
-        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        int statusCode;
+        string message;
+
+        switch (exception)
+        {
+            case KeyNotFoundException:
+                statusCode = (int)HttpStatusCode.NotFound;
+                message = exception.Message;
+                break;
+            case UserExistsException:
+                statusCode = (int)HttpStatusCode.Conflict;
+                message = exception.Message;
+                break;
+            case UpdateClientException:
+                statusCode = (int)HttpStatusCode.BadRequest;
+                message = exception.Message;
+                break;
+            case ClientHasExistsException:
+                statusCode = (int)HttpStatusCode.BadRequest;
+                message = exception.Message;
+                break;
+            case DateException:
+                statusCode = (int)HttpStatusCode.BadRequest;
+                message = exception.Message;
+                break;
+            case ClientHasContractException:
+                statusCode = (int)HttpStatusCode.Conflict;
+                message = exception.Message;
+                break;
+            case UnauthorizedAccessException:
+                statusCode = (int)HttpStatusCode.Unauthorized;
+                message = "Brak dostępu";
+                break;
+            default:
+                statusCode = (int)HttpStatusCode.InternalServerError;
+                message = "Wewnętrzny błąd serwera.";
+                break;
+        }
+
+        context.Response.StatusCode = statusCode;
         context.Response.ContentType = "application/json";
 
-        // Create a response model
         var response = new
         {
             error = new
             {
-                message = "An error occurred while processing your request.",
-                detail = exception.Message
+                message,
+                type = exception.GetType().Name
             }
         };
 
-        // Serialize the response model to JSON
-        var jsonResponse = System.Text.Json.JsonSerializer.Serialize(response);
-
-        // Write the JSON response to the HTTP response
-        return context.Response.WriteAsync(jsonResponse);
+        var json = System.Text.Json.JsonSerializer.Serialize(response);
+        return context.Response.WriteAsync(json);
     }
 }
